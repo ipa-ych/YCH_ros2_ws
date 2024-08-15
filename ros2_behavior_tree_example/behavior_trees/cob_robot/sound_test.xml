@@ -1,0 +1,17 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightGreen"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/Hello-2s.mp3"/>
+            <callStdSrvTrigger name="setLightRed" service_name="/behavior/setLightRed"/>
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightGreen"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/Hello-2s.mp3"/>
+            <callStdSrvTrigger name="setLightRed" service_name="/behavior/setLightRed"/>
+            <!-- <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/TaskActivated.mp3"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/AskForBottle.mp3"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/BottleDetected.mp3"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/EmergencyStop.mp3"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/StandBy.mp3"/> -->
+        </Sequence>
+    </BehaviorTree>
+</root>

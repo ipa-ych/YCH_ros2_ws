@@ -1,0 +1,23 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightCyanSweep"/>
+            <callStdSrvTrigger name="setLightRed" service_name="/behavior/setLightRed"/>
+            <callCobSrvSetString name="BottleDetected" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/Hello-2s.mp3"/>
+            <callStdSrvTrigger name="setLightGreen123" service_name="/behavior/setLightGreen"/>
+            <callStdSrvTrigger name="setLightCyan123" service_name="/behavior/setLightCyanSweep"/>
+            <callCobSrvSetString name="TaskActivated" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/TaskActivated.mp3"/> 
+            <callCobSrvSetString name="BottleDetected" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/Hello-2s.mp3"/>
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightCyanSweep"/>
+            <callStdSrvTrigger name="setLightCyanBreath" service_name="/behavior/setLightCyanBreath"/>
+            <!-- <callStdSrvTrigger name="setMimicAfraid" service_name="/behavior/setMimicAfraid"/>
+            <callStdSrvTrigger name="setMimicAngry" service_name="/behavior/setMimicAngry"/>
+            <callStdSrvTrigger name="setMimicAsking" service_name="/behavior/setMimicAsking"/>
+            <callStdSrvTrigger name="setMimicBlinking" service_name="/behavior/setMimicBlinking"/>
+            <callStdSrvTrigger name="setMimicBlinkingLeft" service_name="/behavior/setMimicBlinkingLeft"/>
+            <callStdSrvTrigger name="setMimicBlinkingRight" service_name="/behavior/setMimicBlinkingRight"/>
+            <callStdSrvTrigger name="setMimicBored" service_name="/behavior/setMimicBored"/>
+            <callStdSrvTrigger name="setMimicBusy" service_name="/behavior/setMimicBusy"/> -->
+        </Sequence>
+    </BehaviorTree>
+</root>

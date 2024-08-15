@@ -1,0 +1,19 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <callStdSrvTrigger name="setLightCyanSweep" service_name="/behavior/setLightCyanSweep"/>
+            <!-- <callStdSrvEmpty service_name="/clear"/> -->
+            <!-- <RunOnce then_skip="true"> -->
+            <setNaviGoal name="A" x="-1" y="6" w="1.57"/>
+            <!-- </RunOnce> -->
+            <!-- <callStdSrvEmpty service_name="/clear"/> -->
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightGreen"/>
+            <!-- <getYoloResultNode name="GetYoloResult" object_name="bottle"/> -->
+            <callStdSrvTrigger name="setLightCyanSweep" service_name="/behavior/setLightCyanSweep"/>
+            <!-- <RunOnce then_skip="true"> -->
+            <setNaviGoal name="B" x="1" y="4" w="1.57"/>
+            <!-- </RunOnce> -->
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightGreen"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

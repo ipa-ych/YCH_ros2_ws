@@ -1,0 +1,18 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <!-- <callStdSrvEmpty name="callSrvClean" service_name="/clear"/>
+            <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightGreen"/> -->
+            <!-- <RunOnce then_skip="true">
+                <setDeskClean name="setDeskClean"/>
+            </RunOnce> -->
+            <!-- <getYoloResultNode name="GetYoloResult" object_name="bottle"/> -->
+            <RunOnce then_skip="true">
+                <setNaviGoal name="A" x="-2" y="-2" w="1.57"/>
+            </RunOnce>
+            <RunOnce then_skip="true">
+                <setNaviGoal name="B" x="+2" y="+2" w="1.57"/>
+            </RunOnce>
+        </Sequence>
+    </BehaviorTree>
+</root>

@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "${default}",
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "includePath": [
+                "/home/nhg-yc/ros2_ws/tricycle_ws/install/pointcloud_to_laserscan/include/**",
+                "/opt/ros/humble/include/**",
+                "/home/nhg-yc/ros2_ws/tricycle_ws/src/pointcloud_to_laserscan/include/**",
+                "/home/nhg-yc/ros2_ws/tricycle_ws/src/tricycle_sim/include/**",
+                "/usr/include/**",
+                "/home/nhg-yc/bt_ws/src/BehaviorTree.CPP/include/**",
+                "/home/nhg-yc/bt_ws/src/BehaviorTree.ROS2/behaviortree_ros2/**",
+                "/home/nhg-yc/yolo_ws/src/yolobot/install/yolov8_msgs/include/yolov8_msgs/**",
+                "/home/nhg-yc/bt_ws/src/ros2_behavior_tree_example/**",
+                "/home/nhg-yc/bt_ws/src/ros2_behavior_tree_example/include/ros2_behavior_tree_example/plugins/**",
+                "/home/nhg-yc/ros2_ws/install/cob_srvs/include/cob_srvs/**",
+                "${workspaceFolder}/build/btcpp_ros2_interfaces/rosidl_generator_cpp"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++14"
+        }
+    ],
+    "version": 4
+}

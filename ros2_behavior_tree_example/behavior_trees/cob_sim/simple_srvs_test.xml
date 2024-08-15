@@ -1,0 +1,15 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <RunOnce then_skip="true">
+                <setNaviGoal name="A" x="1" y="1" w="1.57"/>
+            </RunOnce>
+            <setDeskClean name="setDeskClean"/>
+            <!-- <getYoloResultNode name="GetYoloResult" object_name="bottle"/> -->
+            <RunOnce then_skip="true">
+                <setNaviGoal name="A" x="-2" y="-2" w="1.57"/>
+            </RunOnce>
+            <PingNode name="A"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

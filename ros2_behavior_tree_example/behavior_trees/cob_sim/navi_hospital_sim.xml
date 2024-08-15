@@ -1,0 +1,26 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <!-- <callStdSrvTrigger name="setLightCyanBreath" service_name="/behavior/setLightCyanBreath"/>
+            <callCobSrvSetString name="soundHello" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/Hello-2s.mp3"/>
+            <callStdSrvTrigger name="setMimicAsking" service_name="/behavior/setMimicAsking"/>
+            <callStdSrvTrigger name="setLightCyanSweep" service_name="/behavior/setLightCyanSweep"/>
+            
+            <callCobSrvSetString name="TaskActivated" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/TaskActivated.mp3"/>  -->
+            <setNaviGoal name="A" x="-8.5" y="8.5" w="1.57"/>
+            <!-- <callStdSrvTrigger name="setLightGreen" service_name="/behavior/setLightGreen"/>
+            <callCobSrvSetString name="AskForBottle" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/AskForBottle.mp3"/>
+            <callStdSrvTrigger name="setMimicBusy" service_name="/behavior/setMimicBusy"/> -->
+            
+            <getYoloResultNode name="GetYoloResult" object_name="bottle"/>
+            <!-- <callCobSrvSetString name="BottleDetected" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/BottleDetected.mp3"/>
+            <callStdSrvTrigger name="setLightCyanSweep" service_name="/behavior/setLightCyanSweep"/>
+            <callStdSrvTrigger name="setMimicBusy" service_name="/behavior/setMimicBusy"/> -->
+
+            <setNaviGoal name="B" x="-3" y="0" w="1.57"/>
+            <!-- <callCobSrvSetString name="StandBy" service_name="/sound/play" input_data="/u/nhg-yc/Downloads/StandBy.mp3"/>
+            <callStdSrvTrigger name="setLightGreen2" service_name="/behavior/setLightGreen"/>
+            <callStdSrvTrigger name="setMimicBlinking" service_name="/behavior/setMimicBlinking"/> -->
+        </Sequence>
+    </BehaviorTree>
+</root>

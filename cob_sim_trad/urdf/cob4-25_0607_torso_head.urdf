@@ -1,0 +1,1264 @@
+<?xml version="1.0"?>
+<robot name="tricycle_drive" xmlns:xacro="http://ros.org/wiki/xacro">
+  <material name="IPA/LightGrey">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+  <material name="IPA/DarkGrey">
+    <color rgba="0.4 0.4 0.4 1.0"/>
+  </material>
+  <material name="IPA/Black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="IPA/Metall">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+  <material name="IPA/YellowRubber">
+    <color rgba="0.4 0.27 0.16 1.0"/>
+  </material>
+  <material name="IPA/Orange">
+    <color rgba="1.0 0.4 0.0 1.0"/>
+  </material>
+  <material name="IPA/Blue">
+    <color rgba="0.0 0.0 0.5 1.0"/>
+  </material>
+  <material name="Black">
+    <color rgba="0 0 0 1" />
+  </material>
+  <material name="Grey">
+    <color rgba="0.8 0.8 0.8 1" />
+  </material>
+  <material name="Orange">
+    <color rgba="1 0.6 0 1" />
+  </material>
+  <material name="White">
+    <color rgba="1 1 1 1" />
+  </material>
+  <!-- base_link -->
+  <link name="base_link" />
+  <!-- base_footprint -->
+  <link name="base_footprint"/>
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <joint name="base_charger_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.2992 0.0 0.09089"/>
+    <parent link="base_chassis_link"/>
+    <child link="base_charger_link"/>
+  </joint>
+  <!-- base_charger -->
+  <link name="base_charger_link"/>
+  <!-- Chassis -->
+  <link name="base_chassis_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="10"/>
+      <inertia ixx="5.652232699207" ixy="-0.009719934438" ixz="1.293988226423" iyy="5.669473158652" iyz="-0.007379583694" izz="3.683196351726"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 1.0472" xyz="0 0 0"/>
+      <geometry>
+        <!-- <mesh filename="file://$(find cob_sim_trad)/meshes/cob4_base/base.dae"/> -->
+        <mesh filename="file://$(find cob_sim_trad)/meshes/cob4_base/base.dae"/>
+        <!--box size="0.01 0.01 0.01" /-->
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.0472" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/cob4_base/base_collision.stl"/>
+        <!--box size="0.01 0.01 0.01" /-->
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_chassis_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="base_chassis_link"/>
+  </joint>
+
+  <!-- left wheel rotation link  -->
+  <joint name="fl_caster_rotation_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.12422 0.21515 0.0782"/>
+    <parent link="base_chassis_link"/>
+    <child link="fl_caster_rotation_link"/>
+  </joint>
+  <link name="fl_caster_rotation_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="5.9"/>
+      <inertia ixx="0.04" ixy="-0.0007" ixz="0.0" iyy="0.02" iyz="-0.000004" izz="0.05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/drive_wheel/caster.stl"/>
+      </geometry>
+      <material name="IPA/LightGrey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- left wheel Link -->
+  <link name="fl_caster_r_wheel_link">
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.0782" />
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <!-- <cylinder length="0.08" radius="0.0782" /> -->
+        <mesh filename="file://$(find cob_sim_trad)/meshes/drive_wheel/wheel.dae"/>
+      </geometry>
+      <origin rpy="-1.5708 0 0"/>
+      <material name="Black" />
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.44036"/>
+      <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943"/>
+    </inertial>
+  </link>
+
+  <joint name="fl_caster_r_wheel_joint" type="continuous">
+    <origin xyz="-0.12422 0.21515 0.0782" rpy="-1.57 0 0" />
+    <parent link="base_chassis_link" />
+    <child link="fl_caster_r_wheel_link" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="0.2" />
+  </joint>
+
+  <!-- right wheel rotation link -->
+  <joint name="fr_caster_rotation_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.12422 -0.21515 0.0782"/>
+    <parent link="base_chassis_link"/>
+    <child link="fr_caster_rotation_link"/>
+  </joint>
+  <link name="fr_caster_rotation_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="5.9"/>
+      <inertia ixx="0.04" ixy="-0.0007" ixz="0.0" iyy="0.02" iyz="-0.000004" izz="0.05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/drive_wheel/caster.stl"/>
+      </geometry>
+      <material name="IPA/LightGrey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- right wheel Link -->
+  <link name="fr_caster_r_wheel_link">
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.0782" />
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <!-- <cylinder length="0.08" radius="0.0782" /> -->
+        <mesh filename="file://$(find cob_sim_trad)/meshes/drive_wheel/wheel.dae"/>
+      </geometry>
+      <origin rpy="-1.5708 0 0"/>
+      <material name="Black" />
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.44036"/>
+      <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943"/>
+    </inertial>
+  </link>
+
+  <joint name="fr_caster_r_wheel_joint" type="continuous">
+    <origin xyz="-0.12422 -0.21515 0.0782" rpy="-1.57 0 0" />
+    <parent link="base_chassis_link" />
+    <child link="fr_caster_r_wheel_link" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="0.2" />
+  </joint>
+
+  <!-- Steering Link -->
+  <link name="b_caster_rotation_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="5.9"/>
+      <inertia ixx="0.04" ixy="-0.0007" ixz="0.0" iyy="0.02" iyz="-0.000004" izz="0.05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/drive_wheel/caster.stl"/>
+      </geometry>
+      <material name="IPA/LightGrey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="b_caster_rotation_joint" type="continuous">
+    <origin xyz="0.24844 0.0 0.0782" rpy="0 0 0" />
+    <parent link="base_chassis_link" />
+    <child link="b_caster_rotation_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- front wheel link -->
+  <link name="b_caster_r_wheel_link">
+    <visual>
+      <geometry>
+        <!-- <cylinder length="0.08" radius="0.0782" /> -->
+        <mesh filename="file://$(find cob_sim_trad)/meshes/drive_wheel/wheel.dae"/>
+      </geometry>
+      <origin rpy="-1.5708 0 0"/>
+      <material name="Black" />
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="5.9"/>
+      <inertia ixx="0.04" ixy="-0.0007" ixz="0.0" iyy="0.02" iyz="-0.000004" izz="0.05"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="0.0782" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="b_caster_r_wheel_joint" type="continuous">
+    <parent link="b_caster_rotation_link" />
+    <child link="b_caster_r_wheel_link" />
+    <origin xyz="0 0 0" rpy="-1.57 1.57 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <ros2_control name="GazeboSystem_base" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="b_caster_rotation_joint">
+      <command_interface name="position" />
+      <state_interface name="position" />
+    </joint>
+    <joint name="b_caster_r_wheel_joint">
+      <command_interface name="velocity" />
+      <state_interface name="velocity" />
+      <state_interface name="position" />
+    </joint>
+  </ros2_control>
+
+  <!-- laser -->
+  <joint name="base_laser_front_joint" type="fixed">
+    <origin rpy="0.0 0.0 3.14" xyz="-0.244 0.0 0.20858"/>
+    <parent link="base_link"/>
+    <child link="base_laser_front_link"/>
+  </joint>
+  <link name="base_laser_front_link" type="laser">
+    <inertial>
+      <mass value="1.2"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0029999987999999997" ixy="0.0" ixz="0.0" iyy="0.0029999987999999997" iyz="0.0" izz="0.0015"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/sick_s300_laser.dae"/>
+
+      </geometry>
+      <material name="IPA/LightGrey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/sick_s300_laser_collision.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="base_laser_front_link">
+    <sensor name="base_laser_front" type="ray">
+      <always_on>true</always_on>
+      <update_rate>12.0</update_rate>
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>541</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-1.5708</min_angle>
+            <max_angle>1.5708</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>29.5</max>
+          <resolution>0.03</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.02</stddev>
+        </noise>
+      </ray>
+      <!-- <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_base_laser_front_controller">
+        <topicName>base_laser_front/scan_raw</topicName>
+        <frameName>base_laser_front_link</frameName>
+      </plugin> -->
+      <plugin name="gazebo_ros_base_laser_front_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>base_laser_front</namespace>
+          <remapping>~/out:=scan_raw</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <joint name="base_laser_left_joint" type="fixed">
+    <origin rpy="0.0 0.0 1.0472" xyz="0.122 0.21131 0.20858"/>
+    <parent link="base_link"/>
+    <child link="base_laser_left_link"/>
+  </joint>
+  <link name="base_laser_left_link" type="laser">
+    <inertial>
+      <mass value="1.2"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0029999987999999997" ixy="0.0" ixz="0.0" iyy="0.0029999987999999997" iyz="0.0" izz="0.0015"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/sick_s300_laser.dae"/>
+
+      </geometry>
+      <material name="IPA/LightGrey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/sick_s300_laser_collision.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="base_laser_left_link">
+    <sensor name="base_laser_left" type="ray">
+      <always_on>true</always_on>
+      <update_rate>12.0</update_rate>
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>541</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-1.5708</min_angle>
+            <max_angle>1.5708</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>29.5</max>
+          <resolution>0.03</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.02</stddev>
+        </noise>
+      </ray>
+      <!-- <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_base_laser_left_controller">
+        <topicName>base_laser_left/scan_raw</topicName>
+        <frameName>base_laser_left_link</frameName>
+      </plugin> -->
+      <plugin name="gazebo_ros_base_laser_left_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>base_laser_left</namespace>
+          <remapping>~/out:=scan_raw</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <joint name="base_laser_right_joint" type="fixed">
+    <origin rpy="0.0 0.0 -1.0472" xyz="0.122 -0.21131 0.20858"/>
+    <parent link="base_link"/>
+    <child link="base_laser_right_link"/>
+  </joint>
+  <link name="base_laser_right_link" type="laser">
+    <inertial>
+      <mass value="1.2"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0029999987999999997" ixy="0.0" ixz="0.0" iyy="0.0029999987999999997" iyz="0.0" izz="0.0015"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/sick_s300_laser.dae"/>
+      </geometry>
+      <material name="IPA/LightGrey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/sick_s300_laser_collision.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="base_laser_right_link">
+    <sensor name="base_laser_right" type="ray">
+      <always_on>true</always_on>
+      <update_rate>12.0</update_rate>
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>541</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-1.5708</min_angle>
+            <max_angle>1.5708</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>29.5</max>
+          <resolution>0.03</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.02</stddev>
+        </noise>
+      </ray>
+      <!-- <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_base_laser_right_controller">
+        <topicName>base_laser_right/scan_raw</topicName>
+        <frameName>base_laser_right_link</frameName>
+      </plugin> -->
+      <plugin name="gazebo_ros_base_laser_right_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>base_laser_right</namespace>
+          <remapping>~/out:=scan_raw</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- imu -->
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_chassis_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.2"/>
+  </joint>
+
+  <gazebo reference="imu_link">
+    <sensor name="imu_sensor" type="imu">
+    <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <ros>
+          <namespace>/demo</namespace>
+          <remapping>~/out:=imu</remapping>
+        </ros>
+        <initial_orientation_as_reference>false</initial_orientation_as_reference>
+      </plugin>
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+              <bias_mean>0.0000075</bias_mean>
+              <bias_stddev>0.0000008</bias_stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+              <bias_mean>0.0000075</bias_mean>
+              <bias_stddev>0.0000008</bias_stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+              <bias_mean>0.0000075</bias_mean>
+              <bias_stddev>0.0000008</bias_stddev>
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+              <bias_mean>0.1</bias_mean>
+              <bias_stddev>0.001</bias_stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+              <bias_mean>0.1</bias_mean>
+              <bias_stddev>0.001</bias_stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+              <bias_mean>0.1</bias_mean>
+              <bias_stddev>0.001</bias_stddev>
+            </noise>
+          </z>
+        </linear_acceleration>
+      </imu>
+    </sensor>
+  </gazebo> 
+
+  <!-- <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find cob_sim_trad)/config/cob_tricycle_drive_controller.yaml</parameters>
+    </plugin>
+  </gazebo> -->
+
+  <!-- torso -->
+  <joint name="torso_base_joint" type="fixed">
+    <origin rpy="0.0 0.0 3.1416" xyz="0.0 0.0 0.26411"/>
+    <parent link="base_link"/>
+    <child link="torso_base_link"/>
+  </joint>
+  <link name="torso_base_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <!--
+       <xacro:cylinder_inertial radius="0.300" length="0.046" mass="5.0">
+        <origin xyz="0.03 0.08 0.01" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+-->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_1_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.04642"/>
+    <parent link="torso_base_link"/>
+    <child link="torso_1_link"/>
+  </joint>
+  <link name="torso_1_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <!--
+      <xacro:hollow_spherical_cap_inertial r="0.295" h="0.075" t="0.010" mass="6">
+        <origin xyz="0 0 ${0.075/2}" rpy="0 0 0"/>
+      </xacro:hollow_spherical_cap_inertial>
+-->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_2_joint" type="revolute">
+    <origin rpy="0.5236 0 0" xyz="0 0.14734 0.07547"/>
+    <parent link="torso_1_link"/>
+    <child link="torso_2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="-6.2831" upper="6.2831" velocity="1.4"/>
+  </joint>
+  <link name="torso_2_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <!--
+      <xacro:spherical_cap_inertial r="0.295" h="0.075" mass="19.5">
+        <origin xyz="0.034 0.102 0.092" rpy="0.5236 0 0"/>
+      </xacro:spherical_cap_inertial>
+-->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_3_joint" type="revolute">
+    <origin rpy="-0.5236 0 0" xyz="0 -0.09228 0.13477"/>
+    <parent link="torso_2_link"/>
+    <child link="torso_3_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="-6.2831" upper="6.2831" velocity="1.4"/>
+  </joint>
+  <link name="torso_3_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <!--
+      <xacro:cylinder_inertial radius="0.250" length="0.610" mass="23.8">
+        <origin xyz="-0.028 0.005 0.233" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+-->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file:///home/nhg-yc/ros2_ws/cob_ws/install/cob_description/share/cob_description/meshes/cob4_torso/torso_link.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file:///home/nhg-yc/ros2_ws/cob_ws/install/cob_description/share/cob_description/meshes/cob4_torso/torso_link_collision.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_center_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.18566"/>
+    <parent link="torso_3_link"/>
+    <child link="torso_center_link"/>
+  </joint>
+  <link name="torso_center_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="torso_base_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="torso_1_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="torso_2_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="torso_3_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <transmission name="torso_2_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="torso_2_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!--hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface-->
+    </joint>
+    <actuator name="torso_2_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="torso_3_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="torso_3_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!--hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface-->
+    </joint>
+    <actuator name="torso_3_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <ros2_control name="GazeboSystem_torso" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="torso_2_joint">
+      <command_interface name="position">
+        <param name="min">-5</param>
+        <param name="max">5</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="torso_3_joint">
+      <command_interface name="position">
+        <param name="min">-5</param>
+        <param name="max">5</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+
+  <!-- torso cameras -->
+  <joint name="torso_cam3d_left_mount_joint" type="fixed">
+    <origin rpy="-1.57079 0.0 0.61" xyz="0.14873 0.01293 0.27008"/>
+    <parent link="torso_3_link"/>
+    <child link="torso_cam3d_left_mount_link"/>
+  </joint>
+  <link name="torso_cam3d_left_mount_link"/>
+  <joint name="torso_cam3d_left_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="torso_cam3d_left_mount_link"/>
+    <child link="torso_cam3d_left_link"/>
+  </joint>
+  <link name="torso_cam3d_left_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/realsense_d435.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/realsense_d435.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="torso_cam3d_left_link">
+    <sensor name="torso_cam3d_left_depth_frame" type="depth">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>15.0</update_rate>
+      <camera>
+        <horizontal_fov>1.4870205226991688</horizontal_fov>
+        <image>
+          <format>B8G8R8</format>
+          <width>1280</width>
+          <height>720</height>
+        </image>
+        <clip>
+          <near>0.2</near>
+          <far>10.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.0</stddev>
+        </noise>
+      </camera>
+      <!-- <plugin filename="libgazebo_ros_depth_camera.so" name="torso_cam3d_left_frame_controller">
+        <updateRate>15.0</updateRate>
+        <cameraName>torso_cam3d_left</cameraName>
+        <frameName>torso_cam3d_left_color_optical_frame</frameName>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudCutoff>0.2</pointCloudCutoff>
+        <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>0.0</CxPrime>
+        <Cx>0.0</Cx>
+        <Cy>0.0</Cy>
+        <focalLength>0.0</focalLength>
+      </plugin> -->
+      <plugin name="torso_cam3d_left_frame_controller" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>torso_cam3d_left_ns</namespace>
+          <remapping>torso_cam3d_left/image_raw:=torso_cam3d_left/rgb/image_raw</remapping>
+          <!-- <remapping>torso_cam3d_left/image_depth:=torso_cam3d_left/depth/image_raw</remapping> -->
+          <remapping>torso_cam3d_left/camera_info:=torso_cam3d_left/rgb/camera_info</remapping>
+          <!-- <remapping>torso_cam3d_left/camera_info_depth:=torso_cam3d_left/depth/camera_info</remapping>
+          <remapping>torso_cam3d_left/points:=torso_cam3d_left/depth/points</remapping> -->
+        </ros>
+        <camera_name>torso_cam3d_left</camera_name>
+        <frame_name>torso_cam3d_left_color_optical_frame</frame_name>
+        <hack_baseline>0.07</hack_baseline>
+        <min_depth>0.2</min_depth>   
+      </plugin>
+
+    </sensor>
+    <material>IPA/LightGrey</material>
+  </gazebo>
+  <joint name="torso_cam3d_right_mount_joint" type="fixed">
+    <origin rpy="-1.57079 0.0 -0.61" xyz="0.14873 -0.01293 0.27008"/>
+    <parent link="torso_3_link"/>
+    <child link="torso_cam3d_right_mount_link"/>
+  </joint>
+  <link name="torso_cam3d_right_mount_link"/>
+  <joint name="torso_cam3d_right_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="torso_cam3d_right_mount_link"/>
+    <child link="torso_cam3d_right_link"/>
+  </joint>
+  <link name="torso_cam3d_right_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/realsense_d435.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/realsense_d435.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="torso_cam3d_right_link">
+    <sensor name="torso_cam3d_right_depth_frame" type="depth">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>15.0</update_rate>
+      <camera>
+        <horizontal_fov>1.4870205226991688</horizontal_fov>
+        <image>
+          <format>B8G8R8</format>
+          <width>1280</width>
+          <height>720</height>
+        </image>
+        <clip>
+          <near>0.2</near>
+          <far>10.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.0</stddev>
+        </noise>
+      </camera>
+      <!-- <plugin filename="libgazebo_ros_depth_camera.so" name="torso_cam3d_right_frame_controller">
+        <updateRate>15.0</updateRate>
+        <cameraName>torso_cam3d_right</cameraName>
+        <frameName>torso_cam3d_right_color_optical_frame</frameName>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudCutoff>0.2</pointCloudCutoff>
+        <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>0.0</CxPrime>
+        <Cx>0.0</Cx>
+        <Cy>0.0</Cy>
+        <focalLength>0.0</focalLength>
+      </plugin> -->
+      
+      <!-- <plugin name="torso_cam3d_right_frame_controller" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>torso_cam3d_right_ns</namespace>
+          <remapping>torso_cam3d_right/image_raw:=torso_cam3d_right/rgb/image_raw</remapping>
+          <remapping>torso_cam3d_right/image_depth:=torso_cam3d_right/depth/image_raw</remapping>
+          <remapping>torso_cam3d_right/camera_info:=torso_cam3d_right/rgb/camera_info</remapping>
+          <remapping>torso_cam3d_right/camera_info_depth:=torso_cam3d_right/depth/camera_info</remapping>
+          <remapping>torso_cam3d_right/points:=torso_cam3d_right/depth/points</remapping>
+        </ros>
+        <camera_name>torso_cam3d_right</camera_name>
+        <frame_name>torso_cam3d_right_color_optical_frame</frame_name>
+        <min_depth>0.2</min_depth>   
+      </plugin>   -->
+
+    </sensor>
+
+    <material>IPA/LightGrey</material>
+  </gazebo>
+  <joint name="torso_cam3d_down_mount_joint" type="fixed">
+    <origin rpy="0.0 0.56 0.0" xyz="0.15203 0.0 0.1307"/>
+    <parent link="torso_3_link"/>
+    <child link="torso_cam3d_down_mount_link"/>
+  </joint>
+  <link name="torso_cam3d_down_mount_link"/>
+  <joint name="torso_cam3d_down_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="torso_cam3d_down_mount_link"/>
+    <child link="torso_cam3d_down_link"/>
+  </joint>
+  <link name="torso_cam3d_down_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/realsense_d435.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/sensors/realsense_d435.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="torso_cam3d_down_link">
+    <sensor name="torso_cam3d_down_depth_frame" type="depth">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>15.0</update_rate>
+      <camera>
+        <horizontal_fov>1.4870205226991688</horizontal_fov>
+        <image>
+          <format>B8G8R8</format>
+          <width>1280</width>
+          <height>720</height>
+        </image>
+        <clip>
+          <near>0.2</near>
+          <far>10.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.0</stddev>
+        </noise>
+      </camera>
+      <!-- <plugin filename="libgazebo_ros_depth_camera.so" name="torso_cam3d_down_frame_controller">
+        <updateRate>15.0</updateRate>
+        <cameraName>torso_cam3d_down</cameraName>
+        <frameName>torso_cam3d_down_color_optical_frame</frameName>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudCutoff>0.2</pointCloudCutoff>
+        <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>0.0</CxPrime>
+        <Cx>0.0</Cx>
+        <Cy>0.0</Cy>
+        <focalLength>0.0</focalLength>
+      </plugin> -->
+
+      <!-- <plugin name="torso_cam3d_down_frame_controller" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>torso_cam3d_down_ns</namespace>
+          <remapping>torso_cam3d_down/image_raw:=torso_cam3d_down/rgb/image_raw</remapping>
+          <remapping>torso_cam3d_down/image_depth:=torso_cam3d_down/depth/image_raw</remapping>
+          <remapping>torso_cam3d_down/camera_info:=torso_cam3d_down/rgb/camera_info</remapping>
+          <remapping>torso_cam3d_down/camera_info_depth:=torso_cam3d_down/depth/camera_info</remapping>
+          <remapping>torso_cam3d_down/points:=torso_cam3d_down/depth/points</remapping>
+        </ros>
+        <camera_name>torso_cam3d_down</camera_name>
+        <frame_name>torso_cam3d_down_color_optical_frame</frame_name>
+        <hack_baseline>0.07</hack_baseline>
+        <min_depth>0.2</min_depth>   
+      </plugin>     -->
+
+    </sensor>
+
+    <material>IPA/LightGrey</material>
+  </gazebo>
+
+  <!-- head -->
+    <joint name="head_base_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.61"/>
+    <child link="head_base_link"/>
+    <parent link="torso_3_link"/>
+  </joint>
+  <link name="head_base_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_1_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.0305"/>
+    <parent link="head_base_link"/>
+    <child link="head_1_link"/>
+  </joint>
+  <link name="head_1_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_2_joint" type="fixed">
+    <origin rpy="0.349 0 0" xyz="0 -0.07725 0.00439"/>
+    <parent link="head_1_link"/>
+    <child link="head_2_link"/>
+  </joint>
+  <link name="head_2_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_3_joint" type="fixed">
+    <origin rpy="-0.349 0 0" xyz="0 0.09849 0.04476"/>
+    <parent link="head_2_link"/>
+    <child link="head_3_link"/>
+  </joint>
+  <link name="head_3_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/cob4_head/head_link.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find cob_sim_trad)/meshes/cob4_head/head_link_collision.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_center_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 -0.28247"/>
+    <parent link="head_3_link"/>
+    <child link="head_center_link"/>
+  </joint>
+  <link name="head_center_link"/>
+  <gazebo reference="head_base_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="head_1_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="head_2_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="head_3_link">
+    <gravity>true</gravity>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <joint name="head_cam_joint" type="fixed">
+    <origin rpy="-1.57079 -0.73 0.0" xyz="-0.181 0.0 0.325"/>
+    <parent link="head_3_link"/>
+    <child link="head_cam_link"/>
+  </joint>
+  <link name="head_cam_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.038 0.038 0.03"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.038 0.038 0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_cam_frame_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="head_cam_link"/>
+    <child link="head_cam_frame"/>
+  </joint>
+  <link name="head_cam_frame"/>
+  <joint name="head_cam_optical_frame_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="head_cam_frame"/>
+    <child link="head_cam_optical_frame"/>
+  </joint>
+  <link name="head_cam_optical_frame"/>
+  <gazebo reference="head_cam_link">
+    <sensor name="head_cam" type="wideanglecamera">
+      <update_rate>10</update_rate>
+      <camera name="head_cam">
+        <horizontal_fov>2.9670597283903604</horizontal_fov>
+        <image>
+          <format>B8G8R8</format>
+          <width>1280</width>
+          <height>960</height>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+        <lens>
+          <type>custom</type>
+
+          <custom_function>
+            <c1>1.05</c1>
+
+            <c2>4</c2>
+
+            <f>1.0</f>
+
+            <fun>tan</fun>
+
+          </custom_function>
+
+          <scale_to_hfov>true</scale_to_hfov>
+
+          <cutoff_angle>3.141592653589793</cutoff_angle>
+
+          <env_texture_size>512</env_texture_size>
+        </lens>
+      </camera>
+      <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>10</updateRate>
+        <cameraName>head_cam</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>head_cam_optical_frame</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+    <material>IPA/LightGrey</material>
+  </gazebo>
+
+  <!-- load ros2_control config file -->
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find cob_sim_trad)/config/cob_arm_0415.yaml</parameters>
+    </plugin>
+  </gazebo>
+  
+</robot>
