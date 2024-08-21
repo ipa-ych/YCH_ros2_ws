@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Launch SLAM in gazebo
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -39,7 +41,7 @@ def generate_launch_description():
 
     xacro_file = os.path.join(cob_sim_trad_path,
                               'urdf',
-                              'cob4-25_0607_torso_head.urdf')
+                              'cob4-25_torso_head.urdf')
 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
@@ -105,7 +107,7 @@ def generate_launch_description():
                     get_package_share_directory('ros2_laser_scan_merger'), 'launch'), '/merge_3_scan_cob.launch.py']),
              )
     
-    slam_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','mapper_params_cob_0409.yaml')
+    slam_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','slam_params_slam_only.yaml')
     slam_toolbox = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('slam_toolbox'), 'launch'), '/online_async_launch.py']),
@@ -124,8 +126,7 @@ def generate_launch_description():
 #                   {'use_sim_time': 'true'}]
 #   )
     
-    # nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_cob_drive.yaml')
-    nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_speedup.yaml')
+    nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_cob_drive.yaml')
     navigation = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('nav2_bringup'), 'launch'), '/navigation_launch.py']),
@@ -158,5 +159,5 @@ def generate_launch_description():
         laser_merger,
         slam_toolbox,
         load_torso_controller,
-        navigation
+        # navigation
     ])

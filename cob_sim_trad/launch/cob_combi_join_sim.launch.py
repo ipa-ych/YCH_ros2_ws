@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Join simulation using both physical robot and Gazebo simulator
+# Navigation runs in simulator, rest functionalities on physical robot
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -39,7 +42,7 @@ def generate_launch_description():
 
     xacro_file = os.path.join(cob_sim_trad_path,
                               'urdf',
-                              'cob4-25_0607_torso_head.urdf')
+                              'cob4-25_torso_head.urdf')
 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)

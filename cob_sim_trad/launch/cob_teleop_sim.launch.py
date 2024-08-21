@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Launch simple teleoperation demo in gazebo
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -39,7 +41,7 @@ def generate_launch_description():
 
     xacro_file = os.path.join(cob_sim_trad_path,
                               'urdf',
-                              'cob4-25_0607_torso_head.urdf')
+                              'cob4-25_torso_head.urdf')
 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
@@ -100,39 +102,30 @@ def generate_launch_description():
             launch_arguments={'joy_config': joy_config}.items()
         )
     
-    laser_merger = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('ros2_laser_scan_merger'), 'launch'), '/merge_3_scan_cob.launch.py']),
-             )
+    # laser_merger = IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource([os.path.join(
+    #                 get_package_share_directory('ros2_laser_scan_merger'), 'launch'), '/merge_3_scan_cob.launch.py']),
+    #          )
     
-    slam_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','slam_params_slam_only.yaml')
-    slam_toolbox = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('slam_toolbox'), 'launch'), '/online_async_launch.py']),
-                    launch_arguments={
-                    'params_file': slam_params_path,
-                    'use_sim_time': 'true' 
-                }.items()
-        )
-
-#     slam_toolbox = Node(
-#     package="slam_toolbox",
-#     executable="async_slam_toolbox_node",
-#     output='screen',
-#     name="slam_toolbox",
-#     parameters = [slam_params_path,
-#                   {'use_sim_time': 'true'}]
-#   )
+    # slam_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','mapper_params_cob_0409.yaml')
+    # slam_toolbox = IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource([os.path.join(
+    #                 get_package_share_directory('slam_toolbox'), 'launch'), '/online_async_launch.py']),
+    #                 launch_arguments={
+    #                 'params_file': slam_params_path,
+    #                 'use_sim_time': 'true' 
+    #             }.items()
+    #     )
     
-    nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_cob_drive.yaml')
-    navigation = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('nav2_bringup'), 'launch'), '/navigation_launch.py']),
-                    launch_arguments={
-                    'params_file': nav2_params_path,
-                    'use_sim_time': 'true' 
-                }.items()
-        )
+    # nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_cob_drive.yaml')
+    # navigation = IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource([os.path.join(
+    #                 get_package_share_directory('nav2_bringup'), 'launch'), '/navigation_launch.py']),
+    #                 launch_arguments={
+    #                 'params_file': nav2_params_path,
+    #                 'use_sim_time': 'true' 
+    #             }.items()
+    #     )
 
 
     return LaunchDescription([
@@ -154,8 +147,8 @@ def generate_launch_description():
         spawn_entity,
         twist_mux,
         teleop_joy,
-        laser_merger,
-        slam_toolbox,
+        # laser_merger,
+        # slam_toolbox,
         load_torso_controller,
         # navigation
     ])

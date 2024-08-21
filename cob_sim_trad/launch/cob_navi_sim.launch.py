@@ -27,6 +27,7 @@ from launch_ros.actions import Node
 
 import xacro
 
+# Launch navigation in gazebo
 
 def generate_launch_description():
     gazebo = IncludeLaunchDescription(
@@ -39,7 +40,7 @@ def generate_launch_description():
 
     xacro_file = os.path.join(cob_sim_trad_path,
                               'urdf',
-                              'cob4-25_0607_torso_head.urdf')
+                              'cob4-25_torso_head.urdf')
 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
@@ -81,13 +82,14 @@ def generate_launch_description():
             executable="twist_mux",
             parameters=[twist_mux_params, {'use_sim_time': True}],
             remappings=[('/cmd_vel_out','/tricycle_controller/cmd_vel')]
-    )
+        )
 
     rviz2 = Node(
         package='rviz2',
         executable='rviz2',
         output='screen',
     )
+
 
     teleop_twist_joy_dir = get_package_share_directory('teleop_twist_joy')
     joy_config = LaunchConfiguration('joy_config', default='xbox')
@@ -97,12 +99,12 @@ def generate_launch_description():
                 os.path.join(teleop_twist_joy_dir, 'launch', 'teleop-launch.py')
             ),
             launch_arguments={'joy_config': joy_config}.items()
-    )
+        )
     
     laser_merger = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('ros2_laser_scan_merger'), 'launch'), '/merge_3_scan_cob.launch.py']),
-    )
+             )
     
     slam_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','mapper_params_cob_0409.yaml')
     slam_toolbox = IncludeLaunchDescription(
@@ -112,9 +114,19 @@ def generate_launch_description():
                     'params_file': slam_params_path,
                     'use_sim_time': 'true' 
                 }.items()
-    )
+        )
+
+#     slam_toolbox = Node(
+#     package="slam_toolbox",
+#     executable="async_slam_toolbox_node",
+#     output='screen',
+#     name="slam_toolbox",
+#     parameters = [slam_params_path,
+#                   {'use_sim_time': 'true'}]
+#   )
     
-    nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_cob_drive.yaml')
+    # nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_cob_drive.yaml')
+    nav2_params_path = os.path.join(get_package_share_directory('cob_sim_trad'),'config','navi_speedup.yaml')
     navigation = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('nav2_bringup'), 'launch'), '/navigation_launch.py']),
@@ -122,24 +134,8 @@ def generate_launch_description():
                     'params_file': nav2_params_path,
                     'use_sim_time': 'true' 
                 }.items()
-    )
-    
-    YoloV8 = Node(
-        package="yolobot_recognition",
-        executable="yolov8_ros2_pt_sim.py",
-        prefix='xterm -e',
-        output='screen'
-    )
+        )
 
-    BT_lifecycle = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('ros2_behavior_tree_example'), 'launch'), '/cob_bt_lifecycle.launch.py']),
-                    launch_arguments={
-                    'node_enable': 'True',
-                    'node_mode': 'cob_sim' ,                                # choose bt_file folder within [cob_sim , cob_robot]
-                    'node_behaviortree' : 'sim_test.xml'    # choose the <BT.xml> file to launch BT for user story
-                }.items()
-    )
 
     return LaunchDescription([
         RegisterEventHandler(
@@ -163,7 +159,5 @@ def generate_launch_description():
         laser_merger,
         slam_toolbox,
         load_torso_controller,
-        navigation,
-        YoloV8,
-        BT_lifecycle,
+        navigation
     ])

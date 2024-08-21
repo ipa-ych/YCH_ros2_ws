@@ -13,6 +13,8 @@ from launch_ros.actions import Node
 
 import xacro
 
+# launch only gazebo simulation
+
 
 def generate_launch_description():
     gazebo = IncludeLaunchDescription(
@@ -25,7 +27,7 @@ def generate_launch_description():
 
     xacro_file = os.path.join(cob_sim_trad_path,
                               'urdf',
-                              'cob4-25_0607_torso_head.urdf')
+                              'cob4-25_torso_head.urdf')
 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)

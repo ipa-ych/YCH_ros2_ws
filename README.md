@@ -39,20 +39,20 @@ colcon build && source install/setup.bash
 2. Launch the demo
 - To launch teleop_demo
 ```bash
-ros2 launch cob_sim_trad cob_teleop_sim_0614.launch.py world:='path_to_world_file'
+ros2 launch cob_sim_trad cob_teleop_sim.launch.py world:='path_to_world_file'
 ```
 >For teleopration (with standard PS4 Joystick), hold trangle to enable base_driver, left joystick to control the base movement (forward/ backward and spin); hold L1 to enable torso, right joystick to control the spin of torso joint
 - To launch SLAM_demo
 ```bash
-ros2 launch cob_sim_trad cob_slam_sim_0614.launch.py world:='path_to_world_file'
+ros2 launch cob_sim_trad cob_slam_sim.launch.py world:='path_to_world_file'
 ```
 - To launch navigation_demo
 ```bash
-ros2 launch cob_sim_trad cob_navi_sim_0614.launch.py world:='path_to_world_file'
+ros2 launch cob_sim_trad cob_navi_sim.launch.py world:='path_to_world_file'
 ```
 - To launch combi_demo (with object detection and BT)
 ```bash
-ros2 launch cob_sim_trad cob_combi_sim_0614.launch.py world:='path_to_world_file'
+ros2 launch cob_sim_trad cob_combi_sim.launch.py world:='path_to_world_file'
 ```
 > In another Terminal, configurate and activate the behaviortree_lifecycle_node with 
 ```bash
