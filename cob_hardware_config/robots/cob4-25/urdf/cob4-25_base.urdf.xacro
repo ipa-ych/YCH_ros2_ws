@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="cob4-25" >
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find cob_description)/urdf/common.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
+
+  <!-- calibration -->
+  <xacro:include filename="$(find cob_hardware_config)/robots/cob4-3/urdf/properties.urdf.xacro" />
+
+  <!-- base -->
+  <xacro:include filename="$(find cob_description)/urdf/cob4_base/base_tricycle.urdf.xacro" />
+
+  <!-- sensors -->
+  <xacro:include filename="$(find cob_description)/urdf/sensors/sick_s300_laser.urdf.xacro"/>
+
+
+  <!-- composition of the robot -->
+  <xacro:base name="base"/>
+  <!-- laser scanners -->
+  <xacro:sick_s300_laser_v0 name="base_laser_front" parent="base">
+    <origin xyz="${laser_front_x} ${laser_front_y} ${laser_front_z}" rpy="${laser_front_roll} ${laser_front_pitch} ${laser_front_yaw}" />
+  </xacro:sick_s300_laser_v0>
+  <xacro:sick_s300_laser_v0 name="base_laser_left" parent="base">
+    <origin xyz="${laser_left_x} ${laser_left_y} ${laser_left_z}" rpy="${laser_left_roll} ${laser_left_pitch} ${laser_left_yaw}" />
+  </xacro:sick_s300_laser_v0>
+  <xacro:sick_s300_laser_v0 name="base_laser_right" parent="base">
+    <origin xyz="${laser_right_x} ${laser_right_y} ${laser_right_z}" rpy="${laser_right_roll} ${laser_right_pitch} ${laser_right_yaw}" />
+  </xacro:sick_s300_laser_v0>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="b_caster_rotation_joint">
+      <command_interface name="position" />
+      <state_interface name="position" />
+    </joint>
+    <joint name="b_caster_r_wheel_joint">
+      <command_interface name="velocity" />
+      <state_interface name="velocity" />
+      <state_interface name="position" />
+    </joint>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find cob_hardware_config)/robots/cob4-25/config/tricycle_drive_controller.yaml</parameters>
+    </plugin>
+  </gazebo>  
+
+</robot>
