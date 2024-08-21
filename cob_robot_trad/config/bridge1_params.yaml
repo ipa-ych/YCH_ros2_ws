@@ -1,0 +1,119 @@
+topics:
+  # base & navi
+  -
+    topic: /base/twist_mux/command_teleop_joy  # Topic name on both ROS 1 and ROS 2
+    type: geometry_msgs/msg/Twist  # Type of topic to bridge
+    queue_size: 1  # Queue size
+  -
+    topic: /scan_unified  # Topic name on both ROS 1 and ROS 2
+    type: sensor_msgs/msg/LaserScan  # Type of topic to bridge
+    queue_size: 1  # Queue size    
+  -
+    topic: /tf  # Topic name on both ROS 1 and ROS 2
+    type: tf2_msgs/msg/TFMessage  # Type of topic to bridge
+    queue_size: 1  # Queue size    
+  -
+    topic: /tf_static  # Topic name on both ROS 1 and ROS 2
+    type: tf2_msgs/msg/TFMessage  # Type of topic to bridge
+    queue_size: 1  # Queue size       
+  - 
+    topic: /joint_states
+    type: sensor_msgs/msg/JointState
+    queue_size: 10    
+  # camera left compressed
+  -
+    topic: /torso_cam3d_left_upright/rgb/image_raw/compressed
+    type: sensor_msgs/msg/CompressedImage  
+    queue_size: 1
+
+services_2_to_1:
+  -
+    service: /behavior/setLightCyan
+    type: std_srvs/Trigger
+  -
+    service: /behavior/setLightCyanBreath
+    type: std_srvs/Trigger
+  -
+    service: /behavior/setLightCyanSweep
+    type: std_srvs/Trigger
+  -
+    service: /behavior/setLightGreen
+    type: std_srvs/Trigger
+  -
+    service: /behavior/setLightRed
+    type: std_srvs/Trigger 
+  -
+    service: /base/driver/init
+    type: std_srvs/Trigger 
+  -
+    service: /base/driver/recover
+    type: std_srvs/Trigger 
+  -
+    service: /base/driver/halt
+    type: std_srvs/Trigger 
+  - 
+    service: /behavior/setMimicAfraid
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicAngry
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicAsking
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicBlinking
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicBlinkingLeft
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicBlinkingRight
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicBored
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicBusy
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicConfused
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicDefault
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicFallingAsleep
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicHappy
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicLaughing
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicNo
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicSad
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicSearching
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicSleeping
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicSurprised
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicTired
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicWakingUp
+    type: std_srvs/Trigger
+  - 
+    service: /behavior/setMimicYes
+    type: std_srvs/Trigger
+  - 
+    service: /sound/play
+    type: cob_srvs/SetString

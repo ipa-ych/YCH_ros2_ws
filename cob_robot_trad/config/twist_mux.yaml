@@ -1,0 +1,12 @@
+twist_mux:
+  ros__parameters:
+    topics.navigation.topic: cmd_vel
+    topics.navigation.timeout: 0.5
+    topics.navigation.priority: 10
+    topics.tracker.topic: cmd_vel_tracker
+    topics.tracker.timeout: 0.5
+    topics.tracker.priority: 20
+    topics.joystick.topic: cmd_vel
+    topics.joystick.timeout: 0.5
+    topics.joystick.priority: 100
+
