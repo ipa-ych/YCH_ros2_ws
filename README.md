@@ -1,5 +1,5 @@
 # YCH_ros2_ws
-![demo simulation with cob4 model](https://github.com/ipa-ych/YCH_ros2_ws/blob/main/Media/HeadPic.png)
+![demo simulation with cob4 model](https://github.com/ipa-ych/YCH_ros2_ws/blob/main/Media/Screenshots/HeadPic.png)
 This package contains subsystems and components for simulation utilizing Care-O-bot 4 (mobile robot combining navigation, detection and decision making with Behavior Tree) in Gazebo 11, implemented with ROS2 Humble
 
 ## Prerequisite
@@ -41,7 +41,7 @@ colcon build && source install/setup.bash
 ```bash
 ros2 launch cob_sim_trad cob_teleop_sim_0614.launch.py world:='path_to_world_file'
 ```
->For teleopration, hold trangle to enable base_driver, left joystick to control the movement
+>For teleopration (with standard PS4 Joystick), hold trangle to enable base_driver, left joystick to control the movement
 - To launch SLAM_demo
 ```bash
 ros2 launch cob_sim_trad cob_slam_sim_0614.launch.py world:='path_to_world_file'
