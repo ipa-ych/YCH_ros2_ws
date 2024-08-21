@@ -1,5 +1,5 @@
 # YCH_ros2_ws
-![demo simulation with cob4 model](https://github.com/ipa-ych/YCH_ros2_ws/blob/main/Media/Screenshots/HeadPic.png)
+![demo simulation with cob4 model](https://github.com/ipa-ych/YCH_ros2_ws/blob/main/Media/Screenshots/cob_sim_hospital.gif)
 This package contains subsystems and components for simulation utilizing Care-O-bot 4 (mobile robot combining navigation, detection and decision making with Behavior Tree) in Gazebo 11, implemented with ROS2 Humble
 
 ## Prerequisite
