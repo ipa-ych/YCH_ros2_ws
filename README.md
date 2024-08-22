@@ -49,7 +49,7 @@ colcon build && source install/setup.bash
 ```bash
 ros2 launch cob_sim_trad cob_teleop_sim.launch.py world:='path_to_world_file'
 ```
->For teleopration (with standard PS4 Joystick), hold trangle to enable base_driver, left joystick to control the base movement (forward/ backward and spin); hold L1 to enable torso, right joystick to control the spin of torso joint
+>For teleopration (with standard PS4 Joystick), hold trangle to enable base_driver, left joystick to control the base movement (forward/ backward and spin); hold L1 to enable torso, right joystick to control the spin of torso joint<br>
 ![Remote Controll](https://github.com/ipa-ych/YCH_ros2_ws/blob/main/Media/Screenshots/remote_settings.png)<br>
 - To launch SLAM_demo
 ```bash
