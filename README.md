@@ -38,6 +38,8 @@ This package contains calibration data for Care-O-bot serie<br>
 Origin: https://github.com/ipa-nhg/cob_calibration_data/tree/humble_dev
 10. cob_robot_trad<br>
 This package contains parameter configuration and launch files for each user story with physical Care-O-bot 4 (teleop, slam, navigation, combi_sim)
+10. aws_robomaker_hospital_world<br>
+This package contains the world for a hospital scene in Gazebo. Visit the [AWS RoboMaker website](https://aws.amazon.com/robomaker/) to learn more about building intelligent robotic applications with Amazon Web Services. In /launch folder, there are customized launch files to start the simulation in hospital world with the Care-O-bot.
 
 ## How to use - Simulation
 1. Colon the repo to workspace_name/src, build and source with
