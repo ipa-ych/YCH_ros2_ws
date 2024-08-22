@@ -70,7 +70,16 @@ ros2 launch cob_sim_trad cob_combi_sim.launch.py world:='path_to_world_file'
 ros2 lifecycle set /bt_lifecycle_node configure
 ros2 lifecycle set /bt_lifecycle_node activate
 ```
-
+- To launch simulation in aws_hospital scene, under path /aws_robomaker_hospital_world, do
+```bash
+chmod +x setup.sh
+./setup.sh
+export GAZEBO_MODEL_PATH=`pwd`/models:`pwd`/fuel_models
+```
+...then launch the demo using launch files in /launch folder with
+```bash
+ros2 launch aws_robomaker_hospital_world view_hospital_with_robot.launch.py
+```
 ## How to use - Test with physical Care-O-bot 4
 1. Colon the repo to workspace_name/src, build and source with
 ```bash
